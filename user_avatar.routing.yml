@@ -1,0 +1,9 @@
+user_avatar.adminsettings:
+  path: '/admin/config/user_avatar/adminsettings'
+  defaults:
+    _form: '\Drupal\user_avatar\Form\AvatarConfigurationForm'
+    _title: 'Avatar Configuration Form'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE

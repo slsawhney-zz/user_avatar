@@ -1,0 +1,6 @@
+user_avatar.adminsettings:
+  title: 'User Avatar configuration'
+  route_name: user_avatar.adminsettings
+  description: 'User Avatar configuration form for admin to fetch Avatar'
+  parent: system.admin_config_media
+  weight: 99

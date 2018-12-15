@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+name: grey_profile_image
+label: 'Grey Profile Image'
+effects:
+  user_avatar_imgeffect_image_desaturate:
+    uuid: user_avatar_imgeffect_image_desaturate
+    id: image_desaturate
+    weight: 1
+    data: {  }

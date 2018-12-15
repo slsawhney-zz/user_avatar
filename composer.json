@@ -1,0 +1,14 @@
+{
+    "name": "drupal/user_avatar",
+    "description": "Create dynamic Avatar for User.",
+    "type": "drupal-module",
+    "require": {
+        "drupal/core": ">=8.2.0"
+    },
+    "authors": [
+        {
+            "name": "Shyam Sawhney",
+            "role": "Maintainer"
+        }  
+    ]
+}

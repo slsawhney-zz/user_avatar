@@ -1,0 +1,8 @@
+name: User Avatar
+description: Custom Module to add User default avatar in Grey Scale
+package: Custom
+configure: user_avatar.adminsettings
+dependencies:
+  - drupal:image
+type: module
+core: 8.x
