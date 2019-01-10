@@ -5,57 +5,13 @@
  * Contains user_avatar.module.
  */
 
-use Drupal\Core\Link;
-use Drupal\image\Entity\ImageStyle;
-
 /**
  * {@inheritdoc}
  */
 function user_avatar_user_presave($account)
 {
-    $avatarApiUrl = Drupal::config('user_avatar.adminsettings')->get('avatar_api_url');
-    $avatarSize = Drupal::config('user_avatar.adminsettings')->get('avatar_size');
-    $userEmail = $account->getEmail();
-    $avatarPath = $avatarApiUrl.'/'.$avatarSize.'/'.$userEmail.'.png';
-
     if ($account->user_picture->isEmpty()) {
-        $imageData = file_get_contents($avatarPath);
-        if ($imageData) {
-            $picture_directory = file_default_scheme().'://pictures';
-
-            file_prepare_directory($picture_directory, FILE_CREATE_DIRECTORY);
-            $file = file_save_data($imageData, $picture_directory.'/'.$userEmail.'.png', FILE_EXISTS_RENAME);
-
-            $avatarInformation = array(
-                    'target_id' => $file->id(),
-                    'alt' => 'User Avatar',
-                    'title' => $avatarIdentifier,
-                );
-            $account->set('user_picture', $avatarInformation);
-        } else {
-            $avatarConfigurationLink = Link::fromTextAndUrl(
-                                            'Avatar Configuration',
-                                            \Drupal\Core\Url::fromUri('internal:/admin/config/user_avatar/adminsettings')
-                                        )->toString();
-            drupal_set_message(t(
-                    'An error occurred in Avatar processing at provided url (@avatarPath). Please check your @avatarConfigurationLink.',
-                    array(
-                        '@avatarPath' => $avatarPath,
-                        '@avatarConfigurationLink' => $avatarConfigurationLink,
-                    )), 'warning');
-        }
-    }
-}
-
-/**
- * Implements hook_preprocess_HOOK() for field templates.
- */
-function user_avatar_preprocess_image(&$variables)
-{
-    if ($variables['uri']) {
-        $imageUri = ImageStyle::load('grey_profile_image')->buildUrl($variables['uri']);
-        $imageSrc = ImageStyle::load('grey_profile_image')->buildUrl($variables['attributes']['src']);
-        $variables['uri'] = $imageUri;
-        $variables['attributes']['src'] = $imageUri;
+        $dynamic_avatar_service = \Drupal::service('user_avatar.dynamic_avatar');
+        $dynamic_avatar_service->setUserAvatar($account);
     }
 }

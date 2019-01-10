@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the user_avatar module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function user_avatar_install()
+{
+    // set grey style for user image
+    entity_get_display('user', 'user', 'default')
+            ->setComponent('user_picture', array(
+                'type' => 'image',
+                'settings' => array(
+                  'image_style' => 'grey_profile_image',
+                ),
+                'weight' => 1,
+            ))
+            ->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function user_avatar_uninstall()
+{
+    // set image style to default for user image
+    entity_get_display('user', 'user', 'default')
+            ->setComponent('user_picture', array(
+                'type' => 'image',
+                'settings' => array(
+                  'image_style' => '',
+                ),
+                'weight' => 1,
+            ))
+            ->save();
+    // Delete Created Image Style.
+    \Drupal::configFactory()->getEditable('image.style.grey_profile_image')->delete();
+
+    // Delete default configuration.
+    \Drupal::configFactory()->getEditable('user_avatar.adminsettings')->clear('avatar_api_url')->save();
+    \Drupal::configFactory()->getEditable('user_avatar.adminsettings')->clear('avatar_size')->save();
+}

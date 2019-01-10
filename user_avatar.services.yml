@@ -1,0 +1,4 @@
+services:
+    user_avatar.dynamic_avatar:
+        class: Drupal\user_avatar\UserAvatar
+        arguments: ['@http_client']

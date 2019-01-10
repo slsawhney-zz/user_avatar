@@ -4,5 +4,8 @@ package: Custom
 configure: user_avatar.adminsettings
 dependencies:
   - drupal:image
+  - drupal:user
+  - drupal:file
+  - drupal:field
 type: module
 core: 8.x
