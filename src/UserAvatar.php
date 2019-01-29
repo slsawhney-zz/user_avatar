@@ -10,6 +10,7 @@ namespace Drupal\user_avatar;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
+use Drupal\Core\Link;
 
 class UserAvatar
 {
