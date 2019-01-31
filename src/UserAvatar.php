@@ -10,6 +10,9 @@ namespace Drupal\user_avatar;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\RequestException;
 use Drupal\Core\Link;
 
 class UserAvatar
@@ -52,6 +55,7 @@ class UserAvatar
                         ],
                     ]);
             $imageData = $request->getBody()->getContents();
+
             if ($imageData) {
                 $picture_directory = file_default_scheme().'://pictures';
 
@@ -73,10 +77,11 @@ class UserAvatar
                     array(
                         '@avatarPath' => $avatarPath,
                         '@avatarConfigurationLink' => $avatarConfigurationLink,
-                    )), 'warning');
+                    )
+                ), 'warning');
             }
-        } catch (ClientException $e) {
-            watchdog_exception('user_avatar', $e->getMessage());
+        } catch (ClientException | RequestException | TransferException | BadResponseException $e) {
+            watchdog_exception('sf_drupal', $e);
         }
     }
 }
